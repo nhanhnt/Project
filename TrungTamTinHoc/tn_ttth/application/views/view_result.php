@@ -169,7 +169,7 @@ $cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['i
 
 
  ?>
- <h3><?php echo $title;?></h3>
+ <h3 style="text-align:center;">PHIẾU KẾT QUẢ</h3>
 
 
 <a href="javascript:print();" class="btn btn-success printbtn"><?php echo $this->lang->line('print');?></a>

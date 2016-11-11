@@ -12,7 +12,7 @@
 <div class="col-md-4">
 
 	<div class="login-panel panel panel-default">
-		<div class="panel-body"> 
+		<div class="panel-body" style="text-align: center""> 
 		<img src="<?php echo base_url('images/logo.png');?>">
 		
 

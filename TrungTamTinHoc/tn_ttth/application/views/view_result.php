@@ -220,6 +220,59 @@ if($result['camera_req']=='1'){
 </div>
 <br>
 
+<div class="col-md-12">
+		 <h3><?php echo $this->lang->line('categorywise');?></h3>
+					<table class="table table-bordered">
+					 <thead> <tr><th style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('category_name');?></th>
+					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('score_obtained');?></th>
+					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('time_spent');?></th>
+					  <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('correct');?></th>
+					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('incorrect');?></th>
+					 <th  style="background:#337ab7;color:#ffffff;"><?php echo $this->lang->line('notattempted');?></th>
+					</tr></thead>
+					<tbody>
+					  <?php
+					  $c=0;
+					  $correct=0;
+					 $incorrect=0;
+					 $notattempted=0;
+					  foreach(explode(',',$result['categories']) as $vk => $category){
+
+
+
+						?>
+						<tr><td>
+						<?php echo $category; ?>
+						</td>
+						<td><?php echo $cia_cat[0][$vk]*$result['correct_score'];?></td>
+						<td><?php echo secintomin($cia_tim_cate[0][$vk]);?> phút</td>
+						<td><?php if(isset($cia_cat[0][$vk])){ echo $cia_cat[0][$vk]; $correct+=$cia_cat[0][$vk]; }else{ echo '0'; } ?></td>
+						<td><?php   if(isset($cia_cat[1][$vk])){ echo $cia_cat[1][$vk]; $incorrect+=$cia_cat[1][$vk]; }else{ echo '0';  } ?></td>
+						<td><?php   if(isset($cia_cat[2][$vk])){ echo $cia_cat[2][$vk]; $notattempted+=$cia_cat[2][$vk]; }else{ echo '0';  } ?></td>
+
+						</tr>
+					 <?php
+					  }
+					  ?>
+					 </tbody>
+						 <thead>
+						 <tr>
+						 <th style="background:#337ab7;color:#ffffff;"><?php echo 'Tổng cộng';?></th>
+						 <th  style="background:#337ab7;color:#ffffff;"><?php echo $result['score_obtained'];?>
+						 </th>
+						 <th style="background:#337ab7;color:#ffffff;"><?php echo secintomin($result['total_time']);?> phút</th>
+						<th style="background:#337ab7;color:#ffffff;"><?php echo $correct;?></th>
+						<th style="background:#337ab7;color:#ffffff;"><?php echo $incorrect;?></th>
+						<th style="background:#337ab7;color:#ffffff;"><?php echo $notattempted;?></th>
+						 </tr>
+						 </thead>
+
+						</table>
+
+
+	</div>
+
+
 <?php
 
 

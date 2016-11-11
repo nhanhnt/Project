@@ -78,7 +78,7 @@ if($this->config->item('tinymce')){
 ?>
 <div class="row">
 <div class="container" style="text-align:right;">
-Bản quyền thuộc <a href="http://ttth.thuathienhue.edu.vn/">TRUNG TÂM TIN HỌC</a> SỞ GD&ĐT THỪA THIÊN HUẾ 
+Phát triển bởi <a href="http://ttth.thuathienhue.edu.vn/">TRUNG TÂM TIN HỌC</a> SỞ GD&ĐT THỪA THIÊN HUẾ 
 </div>
 </div>
 </body>

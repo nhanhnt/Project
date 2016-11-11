@@ -31,7 +31,144 @@
 <?php
 $logged_in=$this->session->userdata('logged_in');
 ?>
+<?php
+function ordinal($number) {
+   $ends = array('th','st','nd','rd','th','th','th','th','th','th');
+   if ((($number % 100) >= 11) && (($number%100) <= 13))
+       return $number. 'th';
+   else
+       return $number. $ends[$number % 10];
+}
 
+function questioninwhichcategory($key,$c_range){
+ foreach($c_range as $k => $cv){
+
+   if($key >= $cv[0] && $key <= $cv[1]){
+     return $k;
+   }
+ }
+
+}
+
+
+
+
+function cia_cat($narray,$c_range){
+ $unattempted=array();
+ $correct=array();
+ $incorrect=array();
+ foreach($narray as $k => $val){
+
+ if($val==2){
+   if(isset($unattempted[questioninwhichcategory($k,$c_range)])){
+   $unattempted[questioninwhichcategory($k,$c_range)]+=1;
+   }else{
+   $unattempted[questioninwhichcategory($k,$c_range)]=1;
+   }
+ }else if($val==1){
+// $correct+=1;
+   if(isset($correct[questioninwhichcategory($k,$c_range)])){
+   $correct[questioninwhichcategory($k,$c_range)]+=1;
+   }else{
+   $correct[questioninwhichcategory($k,$c_range)]=1;
+   }
+ }else if($val==0){
+// $incorrect+=1;
+   if(isset($incorrect[questioninwhichcategory($k,$c_range)])){
+   $incorrect[questioninwhichcategory($k,$c_range)]+=1;
+   }else{
+   $incorrect[questioninwhichcategory($k,$c_range)]=1;
+   }
+ }
+
+
+
+ }
+
+ return array($correct,$incorrect,$unattempted);
+}
+
+
+
+
+
+function cia_tim_cate($narray,$tim,$c_range){
+ $unattempted=array();
+ $correct=array();
+ $incorrect=array();
+ foreach($narray as $k => $val){
+
+ if($val==2){
+   if(isset($unattempted[questioninwhichcategory($k,$c_range)])){
+   $unattempted[questioninwhichcategory($k,$c_range)]+=$tim[$k];
+   }else{
+   $unattempted[questioninwhichcategory($k,$c_range)]=$tim[$k];
+   }
+ }else if($val==1){
+// $correct+=1;
+   if(isset($correct[questioninwhichcategory($k,$c_range)])){
+   $correct[questioninwhichcategory($k,$c_range)]+=$tim[$k];
+   }else{
+   $correct[questioninwhichcategory($k,$c_range)]=$tim[$k];
+   }
+ }else if($val==0){
+// $incorrect+=1;
+   if(isset($incorrect[questioninwhichcategory($k,$c_range)])){
+   $incorrect[questioninwhichcategory($k,$c_range)]+=$tim[$k];
+   }else{
+   $incorrect[questioninwhichcategory($k,$c_range)]=$tim[$k];
+   }
+ }
+
+ }
+
+ return array($correct,$incorrect,$unattempted);
+}
+function prezero($val){
+ if($val <= 9){
+ return '0'.$val;
+ }else{
+   return $val;
+ }
+}
+function secintomin($sec){
+ if($sec >= 60){
+ $splitin=explode('.',($sec/60));
+ if(isset($splitin[1])){
+   $secs=substr(intval((substr($splitin[1],0,2)*60)/100),0,2);
+ }else{
+   $secs=0;
+ }
+ return $splitin[0].':'.prezero($secs);
+ }else{
+ return '0:'.prezero($sec);
+ }
+}
+
+
+function per_nonzero($arr){
+
+$totallen=count($arr);
+$filt=array_filter($arr);
+$per=(count($filt)/$totallen)*100;
+return intval($per);
+}
+
+$c_range=array();
+$j=0;
+$i=0;
+foreach(explode(",",$result['category_range']) as $ck => $cv){
+ $c_range[]=array($i,($i+($cv-1)));
+ $i+=$cv;
+}
+$correct_incorrect_unattempted=explode(",",$result['score_individual']);
+
+$cia_cat=cia_cat($correct_incorrect_unattempted,$c_range);
+
+$cia_tim_cate=cia_tim_cate($correct_incorrect_unattempted,explode(",",$result['individual_time']),$c_range);
+
+
+ ?>
  <h3><?php echo $title;?></h3>
 
 
@@ -69,7 +206,7 @@ if($result['camera_req']=='1'){
 <tr><td><?php echo $this->lang->line('email');?></td><td><?php echo $result['email'];?></td></tr>
 <tr><td><?php echo $this->lang->line('quiz_name');?></td><td><?php echo $result['quiz_name'];?></td></tr>
 <tr><td><?php echo $this->lang->line('attempt_time');?></td><td><?php echo date('Y-m-d H:i:s',$result['start_time']);?></td></tr>
-<tr><td><?php echo $this->lang->line('time_spent');?></td><td><?php echo intval($result['total_time']/60);?></td></tr>
+<tr><td><?php echo $this->lang->line('time_spent');?></td><td><?php echo secintomin($result['total_time']);?> phút</td></tr>
 <tr><td><?php echo $this->lang->line('percentage_obtained');?></td><td><?php echo $result['percentage_obtained'];?>%</td></tr>
 <!--<tr><td><?php echo $this->lang->line('percentile_obtained');?></td><td><?php echo substr(((($percentile[1]+1)/$percentile[0])*100),0,5);   ?>%</td></tr> -->
 <tr><td><?php echo $this->lang->line('score_obtained');?></td><td><?php echo $result['score_obtained'];?></td></tr>
@@ -157,12 +294,12 @@ $abc=array(
 '2'=>'C',
 '3'=>'D',
 '4'=>'E',
-'6'=>'F',
-'7'=>'G',
-'8'=>'H',
-'9'=>'I',
-'10'=>'J',
-'11'=>'K'
+'5'=>'F',
+'6'=>'G',
+'7'=>'H',
+'8'=>'I',
+'9'=>'J',
+'10'=>'K'
 );
 foreach($questions as $qk => $question){
 ?>

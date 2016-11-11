@@ -100,9 +100,10 @@ window.location="<?php echo site_url('quiz/submit_quiz/');?>";
 <div class="save_answer_signal" id="save_answer_signal1"></div>
 
 <div style="float:right;width:150px; margin-right:10px;" >
-
-	Time left: <span id='timer' >
+	<p style="color:red;font-size:20px">
+	Thời gian: <span id='timer' >
 	<script type="text/javascript">window.onload = CreateTimer("timer", <?php echo $seconds;?>);</script>
+	</p>
 </span>
 </div>
 <div style="float:left;width:150px; " >

@@ -96,6 +96,7 @@ $lang['add_new'] = "Thêm mới";
 $lang['edit'] = "Sửa";
 $lang['search'] = "Tìm kiếm";
 $lang['submit'] = "Gửi";
+$lang['dangky'] = "Đăng ký";
 $lang['list'] = "Danh sách";
 $lang['result'] = "Kết quả";
 $lang['resultlist'] = "Danh sách kết quả";

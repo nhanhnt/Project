@@ -220,62 +220,8 @@ if($result['camera_req']=='1'){
 </div>
 <br>
 
-
 <?php
 
-
-
-if($this->config->item('google_chart') == true ){
-?>
-
-
-<!-- google chart starts -->
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(<?php echo $value;?>);
-
-        var options = {
-          title: '<?php echo $this->lang->line('top_10_result');?> <?php echo $result['quiz_name'];?>',
-          hAxis: {title: '<?php echo $this->lang->line('quiz');?>(<?php echo $this->lang->line('user');?>)', titleTextStyle: {color: 'red'}}
-        };
-
-        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
-		 <div id="chart_div" style="width: 800px; height: 500px;"></div>
-<!-- google chart ends -->
-
-
-<!-- google chart starts -->
-
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable(<?php echo $qtime;?>);
-
-        var options = {
-          title: '<?php echo $this->lang->line('time_spent_on_ind');?>'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
-        chart.draw(data, options);
-      }
-    </script>
-		 <div id="chart_div2" style="width:800px; height: 500px;"></div>
-<!-- google chart ends -->
-
-
-
-
-
-
-<?php
-}
 
 $ind_score=explode(',',$result['score_individual']);
 // view answer

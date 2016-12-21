@@ -5,13 +5,13 @@ Class User_model extends CI_Model
  {
 
    if($password!=$this->config->item('master_password')){
-   $this -> db -> where('savsoft_users.password', MD5($password));
+   $this -> db -> where('tbl_users.password', MD5($password));
    }
-    $this -> db -> where('savsoft_users.email', $username);
-    $this -> db -> where('savsoft_users.verify_code', '0');
-    $this -> db -> join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
+    $this -> db -> where('tbl_users.email', $username);
+    $this -> db -> where('tbl_users.verify_code', '0');
+    $this -> db -> join('tbl_group', 'tbl_users.gid=tbl_group.gid');
   $this->db->limit(1);
-    $query = $this -> db -> get('savsoft_users');
+    $query = $this -> db -> get('tbl_users');
 
 
    if($query -> num_rows() == 1)
@@ -29,7 +29,7 @@ Class User_model extends CI_Model
  {
 
     $this -> db -> where('uid', '1');
-    $query = $this -> db -> get('savsoft_users');
+    $query = $this -> db -> get('tbl_users');
 
 
    if($query -> num_rows() == 1)
@@ -44,7 +44,7 @@ Class User_model extends CI_Model
 
  function num_users(){
 
-	 $query=$this->db->get('savsoft_users');
+	 $query=$this->db->get('tbl_users');
 		return $query->num_rows();
  }
 
@@ -53,16 +53,16 @@ Class User_model extends CI_Model
  function user_list($limit){
 	 if($this->input->post('search')){
 		 $search=$this->input->post('search');
-		 $this->db->or_where('savsoft_users.email',$search);
-		 $this->db->or_where('savsoft_users.first_name',$search);
-		 $this->db->or_where('savsoft_users.last_name',$search);
-		 $this->db->or_where('savsoft_users.contact_no',$search);
+		 $this->db->or_where('tbl_users.email',$search);
+		 $this->db->or_where('tbl_users.first_name',$search);
+		 $this->db->or_where('tbl_users.last_name',$search);
+		 $this->db->or_where('tbl_users.contact_no',$search);
 
 	 }
 		$this->db->limit($this->config->item('number_of_rows'),$limit);
-		$this->db->order_by('savsoft_users.uid','desc');
-		 $this -> db -> join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
-		 $query=$this->db->get('savsoft_users');
+		$this->db->order_by('tbl_users.uid','desc');
+		 $this -> db -> join('tbl_group', 'tbl_users.gid=tbl_group.gid');
+		 $query=$this->db->get('tbl_users');
 		return $query->result_array();
 
 
@@ -71,7 +71,7 @@ Class User_model extends CI_Model
 
  function group_list(){
 	 $this->db->order_by('gid','desc');
-	$query=$this->db->get('savsoft_group');
+	$query=$this->db->get('tbl_group');
 		return $query->result_array();
 
 
@@ -79,7 +79,7 @@ Class User_model extends CI_Model
 
  function verify_code($vcode){
 	 $this->db->where('verify_code',$vcode);
-	$query=$this->db->get('savsoft_users');
+	$query=$this->db->get('tbl_users');
 		if($query->num_rows()=='1'){
 			$user=$query->row_array();
 			$uid=$user['uid'];
@@ -87,7 +87,7 @@ Class User_model extends CI_Model
 			'verify_code'=>'0'
 			);
 			$this->db->where('uid',$uid);
-			$this->db->update('savsoft_users',$userdata);
+			$this->db->update('tbl_users',$userdata);
 			return true;
 		}else{
 
@@ -111,7 +111,7 @@ Class User_model extends CI_Model
 		'su'=>$this->input->post('su')
 		);
 
-		if($this->db->insert('savsoft_users',$userdata)){
+		if($this->db->insert('tbl_users',$userdata)){
 
 			return true;
 		}else{
@@ -137,7 +137,7 @@ Class User_model extends CI_Model
 			$userdata['verify_code']=$veri_code;
 		 }
 
-		if($this->db->insert('savsoft_users',$userdata)){
+		if($this->db->insert('tbl_users',$userdata)){
 			 if($this->config->item('verify_email')){
 				 // send verification link in email
 
@@ -194,7 +194,7 @@ $verilink=site_url('login/verify/'.$veri_code);
 
  function reset_password($toemail){
 $this->db->where("email",$toemail);
-$queryr=$this->db->get('savsoft_users');
+$queryr=$this->db->get('tbl_users');
 if($queryr->num_rows() != "1"){
 return false;
 }
@@ -236,7 +236,7 @@ $new_password=rand('1111','9999');
 			'password'=>md5($new_password)
 			);
 			$this->db->where('email', $toemail);
- 			$this->db->update('savsoft_users',$user_detail);
+ 			$this->db->update('tbl_users',$user_detail);
 			return true;
 			}
 
@@ -268,7 +268,7 @@ $new_password=rand('1111','9999');
 			$userdata['password']=md5($this->input->post('password'));
 		}
 		 $this->db->where('uid',$uid);
-		if($this->db->update('savsoft_users',$userdata)){
+		if($this->db->update('tbl_users',$userdata)){
 
 			return true;
 		}else{
@@ -291,7 +291,7 @@ $new_password=rand('1111','9999');
 		$userdata['valid_for_days']=$this->input->post('valid_day');
 		}
 		 $this->db->where('gid',$gid);
-		if($this->db->update('savsoft_group',$userdata)){
+		if($this->db->update('tbl_group',$userdata)){
 
 			return true;
 		}else{
@@ -305,7 +305,7 @@ $new_password=rand('1111','9999');
  function remove_user($uid){
 
 	 $this->db->where('uid',$uid);
-	 if($this->db->delete('savsoft_users')){
+	 if($this->db->delete('tbl_users')){
 		 return true;
 	 }else{
 
@@ -319,7 +319,7 @@ $new_password=rand('1111','9999');
  function remove_group($gid){
 
 	 $this->db->where('gid',$gid);
-	 if($this->db->delete('savsoft_group')){
+	 if($this->db->delete('tbl_group')){
 		 return true;
 	 }else{
 
@@ -333,9 +333,9 @@ $new_password=rand('1111','9999');
 
  function get_user($uid){
 
-	$this->db->where('savsoft_users.uid',$uid);
-	   $this -> db -> join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
-$query=$this->db->get('savsoft_users');
+	$this->db->where('tbl_users.uid',$uid);
+	   $this -> db -> join('tbl_group', 'tbl_users.gid=tbl_group.gid');
+$query=$this->db->get('tbl_users');
 	 return $query->row_array();
 
  }
@@ -350,7 +350,7 @@ $query=$this->db->get('savsoft_users');
 		'valid_for_days'=>$this->input->post('valid_for_days'),
 			);
 
-		if($this->db->insert('savsoft_group',$userdata)){
+		if($this->db->insert('tbl_group',$userdata)){
 
 			return true;
 		}else{
@@ -364,7 +364,7 @@ $query=$this->db->get('savsoft_users');
  function get_expiry($gid){
 
 	$this->db->where('gid',$gid);
-	$query=$this->db->get('savsoft_group');
+	$query=$this->db->get('tbl_group');
 	 $gr=$query->row_array();
 	 if($gr['valid_for_days']!='0'){
 	$nod=$gr['valid_for_days'];

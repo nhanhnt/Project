@@ -100,7 +100,7 @@ class Quiz extends CI_Controller {
 	
 	function no_q_available($cid,$lid){
 		$val="<select name='noq[]'>";
-		$query=$this->db->query(" select * from savsoft_qbank where cid='$cid' and lid='$lid' ");
+		$query=$this->db->query(" select * from tbl_qbank where cid='$cid' and lid='$lid' ");
 		$nor=$query->num_rows();
 		for($i=0; $i<= $nor; $i++){
 			$val.="<option value='".$i."' >".$i."</option>";

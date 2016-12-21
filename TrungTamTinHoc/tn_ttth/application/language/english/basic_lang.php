@@ -1,5 +1,5 @@
 <?php
-$lang['savsoft_quiz'] = "Trung tâm Tin học Sở GD&ĐT Thừa Thiên Huế";
+$lang['tbl_quiz'] = "Trung tâm Tin học Sở GD&ĐT Thừa Thiên Huế";
 $lang['installation_process'] = "Installation Process";
 $lang['installation_completed'] = "Installation Completed. Visit base URL {base_url} to login.<br><br>Default login info:<br> Email: admin@example.com <br>Password: admin<br><br>For more information or customization visit <a href='http://ttth.thuathienhue.edu.vn/'>ttth.thuathienhue.edu.vn</a> ";
 $lang['installation_failed'] = "Installation Failed";

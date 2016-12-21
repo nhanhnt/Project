@@ -67,7 +67,7 @@ class User extends CI_Controller {
 				exit($this->lang->line('permission_denied'));
 			}
 		$this->load->library('form_validation');
-		$this->form_validation->set_rules('email', 'Email', 'required|is_unique[savsoft_users.email]');
+		$this->form_validation->set_rules('email', 'Email', 'required|is_unique[tbl_users.email]');
         $this->form_validation->set_rules('password', 'Password', 'required');
           if ($this->form_validation->run() == FALSE)
                 {

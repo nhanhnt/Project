@@ -5,22 +5,22 @@ Class Qbank_model extends CI_Model
   function question_list($limit,$cid='0',$lid='0'){
 	 if($this->input->post('search')){
 		 $search=$this->input->post('search');
-		 $this->db->or_where('savsoft_qbank.qid',$search);
-		 $this->db->or_like('savsoft_qbank.question',$search);
-		 $this->db->or_like('savsoft_qbank.description',$search);
+		 $this->db->or_where('tbl_qbank.qid',$search);
+		 $this->db->or_like('tbl_qbank.question',$search);
+		 $this->db->or_like('tbl_qbank.description',$search);
 
 	 }
 	 if($cid!='0'){
-		  $this->db->where('savsoft_qbank.cid',$cid);
+		  $this->db->where('tbl_qbank.cid',$cid);
 	 }
 	 if($lid!='0'){
-		  $this->db->where('savsoft_qbank.lid',$lid);
+		  $this->db->where('tbl_qbank.lid',$lid);
 	 }
-		 $this->db->join('savsoft_category','savsoft_category.cid=savsoft_qbank.cid');
-	 $this->db->join('savsoft_level','savsoft_level.lid=savsoft_qbank.lid');
+		 $this->db->join('tbl_category','tbl_category.cid=tbl_qbank.cid');
+	 $this->db->join('tbl_level','tbl_level.lid=tbl_qbank.lid');
 	 $this->db->limit($this->config->item('number_of_rows'),$limit);
-		$this->db->order_by('savsoft_qbank.qid','desc');
-		$query=$this->db->get('savsoft_qbank');
+		$this->db->order_by('tbl_qbank.qid','desc');
+		$query=$this->db->get('tbl_qbank');
 		return $query->result_array();
 		
 	 
@@ -29,7 +29,7 @@ Class Qbank_model extends CI_Model
  
  function num_qbank(){
 	 
-	 $query=$this->db->get('savsoft_qbank');
+	 $query=$this->db->get('tbl_qbank');
 		return $query->num_rows();
  }
  
@@ -37,14 +37,14 @@ Class Qbank_model extends CI_Model
  
  function get_question($qid){
 	 $this->db->where('qid',$qid);
-	 $query=$this->db->get('savsoft_qbank');
+	 $query=$this->db->get('tbl_qbank');
 	 return $query->row_array();
 	 
 	 
  }
  function get_option($qid){
 	 $this->db->where('qid',$qid);
-	 $query=$this->db->get('savsoft_options');
+	 $query=$this->db->get('tbl_options');
 	 return $query->result_array();
 	 
 	 
@@ -53,9 +53,9 @@ Class Qbank_model extends CI_Model
  function remove_question($qid){
 	 
 	 $this->db->where('qid',$qid);
-	 if($this->db->delete('savsoft_qbank')){
+	 if($this->db->delete('tbl_qbank')){
 		  $this->db->where('qid',$qid);
-			$this->db->delete('savsoft_options');
+			$this->db->delete('tbl_options');
 		 return true;
 	 }else{
 		 
@@ -75,7 +75,7 @@ Class Qbank_model extends CI_Model
 	 'cid'=>$this->input->post('cid'),
 	 'lid'=>$this->input->post('lid')	 
 	 );
-	 $this->db->insert('savsoft_qbank',$userdata);
+	 $this->db->insert('tbl_qbank',$userdata);
 	 $qid=$this->db->insert_id();
 	 foreach($this->input->post('option') as $key => $val){
 		 if($this->input->post('score')==$key){
@@ -88,7 +88,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -106,7 +106,7 @@ Class Qbank_model extends CI_Model
 	 'cid'=>$this->input->post('cid'),
 	 'lid'=>$this->input->post('lid')	 
 	 );
-	 $this->db->insert('savsoft_qbank',$userdata);
+	 $this->db->insert('tbl_qbank',$userdata);
 	 $qid=$this->db->insert_id();
 	 foreach($this->input->post('option') as $key => $val){
 		 if(in_array($key,$this->input->post('score'))){
@@ -119,7 +119,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -138,7 +138,7 @@ Class Qbank_model extends CI_Model
 	 'cid'=>$this->input->post('cid'),
 	 'lid'=>$this->input->post('lid')	 
 	 );
-	 $this->db->insert('savsoft_qbank',$userdata);
+	 $this->db->insert('tbl_qbank',$userdata);
 	 $qid=$this->db->insert_id();
 	 foreach($this->input->post('option') as $key => $val){
 	  $score=(1/count($this->input->post('option')));
@@ -148,7 +148,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -169,7 +169,7 @@ Class Qbank_model extends CI_Model
 	 'cid'=>$this->input->post('cid'),
 	 'lid'=>$this->input->post('lid')	 
 	 );
-	 $this->db->insert('savsoft_qbank',$userdata);
+	 $this->db->insert('tbl_qbank',$userdata);
 	 $qid=$this->db->insert_id();
 	 foreach($this->input->post('option') as $key => $val){
 	  $score=1;
@@ -178,7 +178,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -197,7 +197,7 @@ Class Qbank_model extends CI_Model
 	 'cid'=>$this->input->post('cid'),
 	 'lid'=>$this->input->post('lid')	 
 	 );
-	 $this->db->insert('savsoft_qbank',$userdata);
+	 $this->db->insert('tbl_qbank',$userdata);
 	 $qid=$this->db->insert_id();
 	 
 	 
@@ -218,9 +218,9 @@ Class Qbank_model extends CI_Model
 	 'lid'=>$this->input->post('lid')	 
 	 );
 	 $this->db->where('qid',$qid);
-	 $this->db->update('savsoft_qbank',$userdata);
+	 $this->db->update('tbl_qbank',$userdata);
 	 $this->db->where('qid',$qid);
-	$this->db->delete('savsoft_options');
+	$this->db->delete('tbl_options');
 	 foreach($this->input->post('option') as $key => $val){
 		 
 		 
@@ -234,7 +234,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -257,9 +257,9 @@ Class Qbank_model extends CI_Model
 	 'lid'=>$this->input->post('lid')	 
 	 );
 	 $this->db->where('qid',$qid);
-	 $this->db->update('savsoft_qbank',$userdata);
+	 $this->db->update('tbl_qbank',$userdata);
 	 $this->db->where('qid',$qid);
-	$this->db->delete('savsoft_options');
+	$this->db->delete('tbl_options');
 	 foreach($this->input->post('option') as $key => $val){
 		 if(in_array($key,$this->input->post('score'))){
 			 $score=(1/count($this->input->post('score')));
@@ -271,7 +271,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -291,9 +291,9 @@ Class Qbank_model extends CI_Model
 	 'lid'=>$this->input->post('lid')	 
 	 );
 	 	 $this->db->where('qid',$qid);
-	 $this->db->update('savsoft_qbank',$userdata);
+	 $this->db->update('tbl_qbank',$userdata);
 	 $this->db->where('qid',$qid);
-	$this->db->delete('savsoft_options');
+	$this->db->delete('tbl_options');
 	foreach($this->input->post('option') as $key => $val){
 	  $score=(1/count($this->input->post('option')));
 	$userdata=array(
@@ -302,7 +302,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -324,9 +324,9 @@ Class Qbank_model extends CI_Model
 	 'lid'=>$this->input->post('lid')	 
 	 );
 		 $this->db->where('qid',$qid);
-	 $this->db->update('savsoft_qbank',$userdata);
+	 $this->db->update('tbl_qbank',$userdata);
 	 $this->db->where('qid',$qid);
-	$this->db->delete('savsoft_options');
+	$this->db->delete('tbl_options');
  foreach($this->input->post('option') as $key => $val){
 	  $score=1;
 	$userdata=array(
@@ -334,7 +334,7 @@ Class Qbank_model extends CI_Model
 	 'qid'=>$qid,
 	 'score'=>$score,
 	 );
-	 $this->db->insert('savsoft_options',$userdata);	 
+	 $this->db->insert('tbl_options',$userdata);	 
 		 
 	 }
 	 
@@ -354,9 +354,9 @@ Class Qbank_model extends CI_Model
 	 'lid'=>$this->input->post('lid')	 
 	 );
 		 $this->db->where('qid',$qid);
-	 $this->db->update('savsoft_qbank',$userdata);
+	 $this->db->update('tbl_qbank',$userdata);
 	 $this->db->where('qid',$qid);
-	$this->db->delete('savsoft_options');
+	$this->db->delete('tbl_options');
 
 	 
 	 return true;
@@ -369,7 +369,7 @@ Class Qbank_model extends CI_Model
  // category function start
  function category_list(){
 	 $this->db->order_by('cid','desc');
-	 $query=$this->db->get('savsoft_category');
+	 $query=$this->db->get('tbl_category');
 	 return $query->result_array();
 	 
  }
@@ -385,7 +385,7 @@ Class Qbank_model extends CI_Model
 		);
 	 
 		 $this->db->where('cid',$cid);
-		if($this->db->update('savsoft_category',$userdata)){
+		if($this->db->update('tbl_category',$userdata)){
 			
 			return true;
 		}else{
@@ -400,7 +400,7 @@ Class Qbank_model extends CI_Model
  function remove_category($cid){
 	 
 	 $this->db->where('cid',$cid);
-	 if($this->db->delete('savsoft_category')){
+	 if($this->db->delete('tbl_category')){
 		 return true;
 	 }else{
 		 
@@ -418,7 +418,7 @@ Class Qbank_model extends CI_Model
 		'category_name'=>$this->input->post('category_name'),
 			);
 		
-		if($this->db->insert('savsoft_category',$userdata)){
+		if($this->db->insert('tbl_category',$userdata)){
 			
 			return true;
 		}else{
@@ -437,7 +437,7 @@ Class Qbank_model extends CI_Model
  
 // level function start
  function level_list(){
-	  $query=$this->db->get('savsoft_level');
+	  $query=$this->db->get('tbl_level');
 	 return $query->result_array();
 	 
  }
@@ -453,7 +453,7 @@ Class Qbank_model extends CI_Model
 		);
 	 
 		 $this->db->where('lid',$lid);
-		if($this->db->update('savsoft_level',$userdata)){
+		if($this->db->update('tbl_level',$userdata)){
 			
 			return true;
 		}else{
@@ -468,7 +468,7 @@ Class Qbank_model extends CI_Model
  function remove_level($lid){
 	 
 	 $this->db->where('lid',$lid);
-	 if($this->db->delete('savsoft_level')){
+	 if($this->db->delete('tbl_level')){
 		 return true;
 	 }else{
 		 
@@ -486,7 +486,7 @@ Class Qbank_model extends CI_Model
 		'level_name'=>$this->input->post('level_name'),
 			);
 		
-		if($this->db->insert('savsoft_level',$userdata)){
+		if($this->db->insert('tbl_level',$userdata)){
 			
 			return true;
 		}else{
@@ -556,7 +556,7 @@ $question_type=$this->lang->line('long_answer');
 	'question_type' => $question_type
 	);
 	
-	if($this->db->insert('savsoft_qbank',$insert_data)){
+	if($this->db->insert('tbl_qbank',$insert_data)){
 		$qid=$this->db->insert_id();
 		$optionkeycounter = 4;
 		if($ques_type=="0" || $ques_type==""){
@@ -569,7 +569,7 @@ $question_type=$this->lang->line('long_answer');
 				"q_option" => $singlequestion[$optionkeycounter],
 				"score" => $correctoption
 				);
-				$this->db->insert("savsoft_options",$insert_options);
+				$this->db->insert("tbl_options",$insert_options);
 				$optionkeycounter++;
 				}
 			
@@ -602,7 +602,7 @@ $question_type=$this->lang->line('long_answer');
 				"q_option" => $singlequestion[$optionkeycounter],
 				"score" => $correctoptionm[$i-1]
 				);
-				$this->db->insert("savsoft_options",$insert_options);
+				$this->db->insert("tbl_options",$insert_options);
 				$optionkeycounter++;
 				
 				
@@ -638,7 +638,7 @@ $question_type=$this->lang->line('long_answer');
 				"q_option_match" =>$explode_match[1] ,
 				 "score" => $correctoption
 				);
-				$this->db->insert("savsoft_options",$insert_options);
+				$this->db->insert("tbl_options",$insert_options);
 				$optionkeycounter++;
 				}
 				
@@ -659,7 +659,7 @@ $question_type=$this->lang->line('long_answer');
 				"q_option" => $singlequestion[$optionkeycounter],
 				"score" => $correctoption
 				);
-				$this->db->insert("savsoft_options",$insert_options);
+				$this->db->insert("tbl_options",$insert_options);
 				$optionkeycounter++;
 				}
 				

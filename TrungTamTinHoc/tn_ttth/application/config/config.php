@@ -610,4 +610,4 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-$config['master_password']='savsoftquiz';
+$config['master_password']='tblquiz';

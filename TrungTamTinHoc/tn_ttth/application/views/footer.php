@@ -77,8 +77,8 @@ if($this->config->item('tinymce')){
 	}
 ?>
 <div class="row">
-<div class="container" style="text-align:right;">
-Phát triển bởi <a href="http://ttth.thuathienhue.edu.vn/">TRUNG TÂM TIN HỌC</a> SỞ GD&ĐT THỪA THIÊN HUẾ 
+<div class="container" style="text-align:center;">
+Phát triển bởi <a href="http://ttth.thuathienhue.edu.vn/">TRUNG TÂM TIN HỌC</a> SỞ GD&ĐT THỪA THIÊN HUẾ
 </div>
 </div>
 </body>

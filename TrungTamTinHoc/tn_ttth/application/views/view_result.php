@@ -210,7 +210,7 @@ if($result['camera_req']=='1'){
 <tr><td><?php echo $this->lang->line('percentage_obtained');?></td><td><?php echo $result['percentage_obtained'];?>%</td></tr>
 <!--<tr><td><?php echo $this->lang->line('percentile_obtained');?></td><td><?php echo substr(((($percentile[1]+1)/$percentile[0])*100),0,5);   ?>%</td></tr> -->
 <tr><td><?php echo $this->lang->line('score_obtained');?></td><td><?php echo $result['score_obtained'];?></td></tr>
-<tr><td><?php echo $this->lang->line('score_mask');?></td><td><?php echo round($result['score_obtained']*10/30);?></td></tr>
+<tr><td><?php echo $this->lang->line('score_mask');?></td><td><?php echo round($result['score_obtained']*10/40,2);?></td></tr>
 <tr><td><?php echo $this->lang->line('status');?></td><td><?php echo $result['result_status'];?></td></tr>
 
 </table>

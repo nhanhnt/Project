@@ -1,5 +1,5 @@
 <?php
-		$sq_base_url='http://192.168.1.52:81/tracnghiem';
+		$sq_base_url='http://222.255.128.112:81/tracnghiem';
 		$sq_hostname='localhost';
 		$sq_dbname='tracnghiem';
 		$sq_dbusername='tracnghiemnhanhnt';

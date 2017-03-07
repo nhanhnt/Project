@@ -71,8 +71,8 @@ window.location="<?php echo site_url('quiz/submit_quiz/');?>";
 
 
 </script>
-
-<script>
+<!--
+    <script>
 
           $(document).keydown(function(e){
                 if(e.which === 27 ){
@@ -90,7 +90,7 @@ window.location="<?php echo site_url('quiz/submit_quiz/');?>";
            });
           });
     </script>
-
+-->
 <div class="container" >
 
 
